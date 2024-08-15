@@ -1,0 +1,44 @@
+<%- include('header.ejs') %>
+
+
+        <% if(locals.data){ %>
+          <% if(locals.data.docs.length>0){ %>
+          <div class="container-fluid" style="background-color: aliceblue;">
+            <div class="container d-flex align-content-around flex-wrap">
+            <% for(let i=0;i<data.docs.length;i++){ %>
+              <% if(!data.docs[i].cover_edition_key){continue;} %>
+              <div class="card mx-1 my-2" style="width: 18rem;background-color: aqua;">
+                <img class="card-img-top" src="https://covers.openlibrary.org/b/olid/<%= data.docs[i].cover_edition_key %>-L.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title"><%=data.docs[i].title %></h5>
+                  <p class="card-text">Author:<%= data.docs[i].author_name %></p>
+                  <p class="card-text">Publish: <%= data.docs[i].first_publish_year %></p>
+                </div>
+                <div class="card-footer border-0 bg-transparent">
+                  <form action="/add" method="post">
+                    <input type="hidden" name="key" value="<%=data.docs[i].key%>">
+                    <input type="hidden" name="coverid" value="<%= data.docs[i].cover_edition_key %>">
+                    <input type="hidden" name="title" value="<%=data.docs[i].title %>">
+                    <input type="hidden" name="authorName" value="<%= data.docs[i].author_name %>">
+                    <input type="hidden" name="publish_year" value="<%= data.docs[i].first_publish_year %>">
+                    <button class="btn btn-primary" type="submit">add</button>
+                  </form>
+                </div>
+              </div>
+              <% } %>
+            </div>
+          </div>
+          <% }else{ %>
+            <div style="height: 100vh;background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5));">
+              <h1 class="welcome">Wrong Book name</h1>
+              <h2 class="welcome">Please enter a valid one</h2>
+            </div>
+            <% } %>
+            <% }else{ %>
+              <div style="height: 100vh;background-image: linear-gradient(rgba(0, 0, 255, 0.5), rgba(255, 255, 0, 0.5));">
+                <h1 class="welcome">Note my Book</h1>
+                <h2 class="welcome">Never Forget with US!</h2>
+              </div>
+              <% } %>
+
+      <%- include('footer.ejs') %>

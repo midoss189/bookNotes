@@ -1,0 +1,36 @@
+<%- include('header.ejs') %>
+<% if(locals.data){ %>
+    <div class="container">
+        <diV class="row py-2">
+        <% for(let i=0;i<data.length;i++){ %>
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                    <div class="row">
+                        <!-- <div class="col"> -->
+                        <img class="card-img-top img1" src="https://covers.openlibrary.org/b/olid/<%= data[i].cover_id %>-M.jpg" alt="Card image cap">
+                        <!-- </div> -->
+                        <div class="col">
+                            <h5 class="card-title"><%= data[i].title %></h5>
+                            <p class="card-text"><%= data[i].description.substring(0,data[i].description.split('Contains:')[0].split(/\s+/).slice(0,100).join(" ").length) %></p>
+                            
+                        </div>
+                        <div class="bg-transparent border-0 card-footer">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">author:<%= data[i].author %></li>
+                                <li class="list-group-item">publish year:<%= data[i].publish_year %>  </li>
+                                 <a href="/info/<%= data[i].cover_id %>" class="btn btn-primary">View Notes</a>
+                                 <a href="/delete/<%= data[i].cover_id %>" class="btn btn-danger my-2">Delete book</a>
+                            </ul>
+                        </div>
+                    </div>
+                      <!-- <a href="/info/<%= data[i].cover_id %>" class="btn btn-primary">Go somewhere</a> -->
+                    </div>
+                  </div>
+            </div>
+            
+        <% } %> 
+        </div>
+    </div>
+    <% } %>
+    <%- include('footer.ejs') %>

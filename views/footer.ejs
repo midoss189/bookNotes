@@ -1,0 +1,14 @@
+<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+$('#edit-node').on('click',function(){
+    var m = $(this).siblings('.notei').val();
+    $('#noteii').val(m);
+    var n =$(this).siblings('.editText').text();
+    $('#new').text(n);
+    var s=$(this).siblings('.coverNote').val();
+    $('#coverid').attr('value',s);
+})
+</script>
+</body>
+</html>

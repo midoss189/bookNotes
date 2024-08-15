@@ -1,0 +1,83 @@
+<%- include('header.ejs') %>
+<% if(locals.details){ %>
+    <div class="container my-2">
+        <div class="row">
+            <div class="col-2">
+            <img class="img-thumbnail" src="https://covers.openlibrary.org/b/olid/<%= details.cover_id %>-M.jpg" alt="Book cover" srcset="">
+        </div>
+            <div class="col">
+    <h4><%= details.title %></h4>
+    <p><%= details.author%>  <%= details.publish_year%></p>
+    <p style="min-height: 200px;margin: 0;"><%= details.description.substring(0,details.description.split('Contains:')[0].split(/\s+/).slice(0,100).join(" ").length) %></p>
+    <h2>My Notes:</h2> 
+    <!-- Button trigger modal -->
+<button id="create-node" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+    Create Note
+  </button>
+  
+    <% if(locals.notes){ %>
+      <% for(let i=0;i<notes.length;i++){ %>
+      <div class="card my-2">
+        <div class="card-body">
+          <input type="hidden" class="notei" value="<%= notes[i].id %>">
+          <input type="hidden" class="coverNote" value="<%= notes[i].cover_id %>">
+          <p class="editText"><%= notes[i].note %></p>
+          <button id="edit-node" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">
+            edit Note
+          </button>
+          <a href="/deleteNote/<%= notes[i].cover_id %>/<%= notes[i].id %>" type="Button" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+        <% } %>
+        <% }} %>
+        
+    </div>
+    </div>
+    </div>
+    <!-- Modal -->
+  <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createModalLabel">Create Note</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <form action="/addNote" method="post">
+            <input type="hidden" name="coverid" value="<%= details.cover_id %>">
+            <textarea class="form-control" type="text" name="note" placeholder="add your note"></textarea>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <!--edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/editNote" method="post">
+          <input type="hidden" id="coverid" name="coverid" value="0">
+          <input type="hidden" id="noteii" name="note" value="2">
+          <textarea name="newText" id="new" class="form-control"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+        <%- include('footer.ejs') %>
